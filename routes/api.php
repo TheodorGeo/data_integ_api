@@ -14,5 +14,5 @@ use Illuminate\Http\Request;
 */
 
 Route::get('', function(){
-  return 'Ok !';
+  return 'Done !';
 });
