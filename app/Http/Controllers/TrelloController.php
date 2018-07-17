@@ -24,10 +24,10 @@ class TrelloController extends Controller
 
     }
 
+
     public function index()
     {
-      $url = "members/me/boards";
-      $data = $this->request($url,['fields' => 'name,shortLink']);
+      $data = $this->getAllBoards();
 
       if (!$this->infos['errorBoolean']) {
         $boards = json_decode($data);
@@ -38,16 +38,62 @@ class TrelloController extends Controller
 
     }
 
+
     public function shortLink($shortLink)
     {
-      $url = "members/me/boards";
-      $boards = $this->request($url,['fields' => 'name,shortLink']);
-      dd($boards);
-
+      $board =  $this->getBoardByShortLink($shortLink);
+      if ($this->infos['errorBoolean']) {
+        return $this->infos;
+      }else {
+        return $board;
+      }
 
     }
 
 
+    public function boardByShortLink($shortLink)
+    {
+      $board = $this->getBoardByShortLink($shortLink);
+      $fields = $this->fields();
+      if ($this->infos['errorBoolean']) {
+        return $this->infos;
+      }
+      $id = $board['id'];
+      $body['board'] = $board;
+      foreach ($fields as $field) {
+        $data = $this->getBoardField($id, $field);
+        if ($this->infos['errorBoolean']) {
+          return $this->infos;
+        }else {
+          $body[$field] = json_decode($data);
+        }
+      }
+
+      return $body;
+
+    }
+
+
+    public function boardById($id)
+    {
+      $board = $this->getBoardById($id);
+      $fields = $this->fields();
+      if ($this->infos['errorBoolean']) {
+        return $this->infos;
+      }
+      $id = $board['id'];
+      $body['board'] = $board;
+      foreach ($fields as $field) {
+        $data = $this->getBoardField($id, $field);
+        if ($this->infos['errorBoolean']) {
+          return $this->infos;
+        }else {
+          $body[$field] = json_decode($data);
+        }
+      }
+
+      return $body;
+    }
 
     //--------------------------------------------------------------------------
     //Use this method to send safetely request to an external server and handle
@@ -77,11 +123,132 @@ class TrelloController extends Controller
         $this->infos['errorBoolean'] = true ;
       } catch(ClientException $e){
         $this->infos['status'] = $e->getResponse()->getStatusCode();
-        $this->infos['message'] = $e->getResponse()->getReasonPhrase();
+        $this->infos['messages'][] = $e->getResponse()->getReasonPhrase();
         $this->infos['errorBoolean'] = true ;
       }
 
     }
 
+
+
+
+    //--------------------------------------------------------------------------
+    //Use this method to get all the boards via user's token
+    //Not required parameters
+    //--------------------------------------------------------------------------
+    private function getAllBoards()
+    {
+      $url = "members/me/boards";
+      return $this->request($url,['fields' => 'name,shortLink']);
+    }
+
+
+
+    //--------------------------------------------------------------------------
+    //Use this method to get all the boards via user's token
+    //Not required parameters
+    //--------------------------------------------------------------------------
+    private function getBoardField($id, $field)
+    {
+      $url = 'boards/'.$id.'/'.$field;
+      return $this->request($url);
+    }
+
+    //--------------------------------------------------------------------------
+    //Use this method to get a board's infos via its shortLink
+    //Required param: $shortLink
+    //--------------------------------------------------------------------------
+    private function getBoardByShortLink($shortLink)
+    {
+      $data = $this->getAllBoards();
+
+      if ($this->infos['errorBoolean']) {
+        return $this->infos;
+      }
+      $boards = json_decode($data);
+      $fBoard = null;
+      foreach ($boards as $board) {
+        if ($board->shortLink === $shortLink) {
+          $fBoard['name'] = $board->name;
+          $fBoard['id'] = $board->id;
+          $fBoard['shortLink'] = $board->shortLink;
+          break;
+        }
+      }
+
+      if ($fBoard !== null) {
+        return $fBoard;
+      }else {
+        $this->infos['messages'][] = 'Please enter the correct shortLink of the board';
+        $this->infos['errorBoolean'] = true ;
+      }
+
+
+    }
+
+
+    //--------------------------------------------------------------------------
+    //Use this method to get a board's infos via its id
+    //Required param: $id
+    //--------------------------------------------------------------------------
+    private function getBoardById($id)
+    {
+      $data = $this->getAllBoards();
+
+      if ($this->infos['errorBoolean']) {
+        return $this->infos;
+      }
+      $boards = json_decode($data);
+      $fBoard = null;
+      foreach ($boards as $board) {
+        if ($board->id === $id) {
+          $fBoard['name'] = $board->name;
+          $fBoard['id'] = $board->id;
+          $fBoard['shortLink'] = $board->shortLink;
+          break;
+        }
+      }
+
+      if ($fBoard !== null) {
+        return $fBoard;
+      }else {
+        $this->infos['messages'][] = 'Please enter the correct shortLink of the board';
+        $this->infos['errorBoolean'] = true ;
+      }
+
+
+    }
+
+
+
+
+    //--------------------------------------------------------------------------
+    //Use this method to et the required fields of the board
+    //possible params fields=cards,lists,checklists,members
+    //--------------------------------------------------------------------------
+
+    private function fields()
+    {
+      $fields = [];
+      $fieldBoolean = false;
+      if (request('fields') !== null) {
+        $query = explode(',', request('fields'));
+        foreach ($query as $f) {
+          if (($f === 'cards') || ($f === 'lists') || ($f === 'checklists') || ($f === 'members') ) {
+            $fields[] = $f;
+            $fieldBoolean = true;
+          }
+        }
+        if ($fieldBoolean) {
+          return $fields;
+        }else {
+          $this->infos['messages'][] = 'Please enter the correct fields options';
+          $this->infos['errorBoolean'] = true ;
+        }
+      }else {
+        $this->infos['messages'][] = 'Please enter the correct fields options';
+        $this->infos['errorBoolean'] = true ;
+      }
+    }
 
 }
