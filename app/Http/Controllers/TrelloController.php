@@ -15,12 +15,12 @@ class TrelloController extends Controller
     private $infos = [
       'errorBoolean' => false
     ];
-    public $app_key = '0043dc605ec22c8b475f7e945cc1f067';
 
     function __construct()
     {
       $this->token = request('token');
       $this->client = new Client(['base_uri' => 'https://api.trello.com/1/']);
+      $this->app_key = env('TRELLO_APP_KEY', '0043dc605ec22c8b475f7e945cc1f067');
 
     }
 
