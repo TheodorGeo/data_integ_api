@@ -7,6 +7,8 @@ This is a laravel 5.6 based API for data integration and extraction from the RES
   - Wrike
   - Asana
 
+[This is a simple UI](https://gitlab.com/theodor_g/UI-Data-Integration-Testing) for testing this API and the generated JSON files
+
 ##### Basic documentation
 
 # Trello
