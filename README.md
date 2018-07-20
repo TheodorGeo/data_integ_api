@@ -8,6 +8,11 @@ This is a laravel 5.6 based API for data integration and extraction from the RES
   - Asana
 
 # Trello
+
+Before start using the API for making requests to trello you must define your Trello application key in the .env file :
+`TRELLO_APP_KEY=your_trello_application_key` which you can find [here](http://https://trello.com/app-key "here")
+
+
 Available routes for trello requests:
 
 - Get all available boards via given token `/trello/boards?token=users_token`
