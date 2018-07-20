@@ -40,7 +40,7 @@ Requirements for making requests to JIRA's API:
 
 This API is using basic authetication provided by JIRA and it is explained [here](https://developer.atlassian.com/server/jira/platform/basic-authentication/)
 
-Available routes for trello requests:
+Available routes for JIRA requests:
 
 - Route to get all projects basic infos via user's token, domain and email  `api/jira/projects?token=users_token&email=user_email&domain=app_domain`
 - Route to get a project infos via users' token, domain, email and project key `api/jira/projects/{projectKey}?token=users_token&email=user_email&domain=app_domain`
