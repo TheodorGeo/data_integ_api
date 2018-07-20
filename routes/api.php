@@ -21,3 +21,19 @@ Route::get('/trello/board/id/{id}', 'TrelloController@boardById')->middleware('c
 
 //Route to get a board's infos (cards,lists,checklists etc) via it's shortLink
 Route::get('/trello/board/shortlink/{shortLink}', 'TrelloController@boardByShortLink')->middleware('cors');
+
+
+/*
+|--------------------------------------------------------------------------
+|Registered routes for JIRA (software) cloud
+|--------------------------------------------------------------------------
+*/
+
+//Route to get all projects basic infos via user's token, domain and email
+Route::get('/jira/projects', 'JiraController@index')->middleware('cors');
+
+//Route to get a project infos via users' token domain email and project key
+Route::get('/jira/projects/{projectKey}', 'JiraController@project')->middleware('cors');
+
+//Route to get a project issues and associated users via users' token domain email and project key
+Route::get('/jira/project/{projectKey}', 'JiraController@show')->middleware('cors');
