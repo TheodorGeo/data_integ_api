@@ -46,6 +46,12 @@ Available routes for JIRA requests:
 - Route to get a project infos via users' token, domain, email and project key `api/jira/projects/{projectKey}?token=users_token&email=user_email&domain=app_domain`
 - Route to get a project's issues and associated users via users' token, domain, email and project key `api/jira/project/{projectKey}?token=users_token&email=user_email&domain=app_domain&fields=issues,users`
 
+##### Available paramaters for the prefered data of each project :
+- issues
+- users
+
+At least 1 is required
+
 License
 ----
 
