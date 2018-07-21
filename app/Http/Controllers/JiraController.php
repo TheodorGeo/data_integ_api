@@ -66,7 +66,6 @@ class JiraController extends Controller
       $project = $this->getProject();
       $total_issues = $this->totalIssues();
       if ($this->infos['errorBoolean']) {
-        echo 'asdfasdfasdf';
         return $this->infos;
       }
       $fields = $this->fields();
@@ -196,7 +195,7 @@ class JiraController extends Controller
         $res = $this->client->request('GET', $url);
         return $res->getBody();
       } catch (ConnectException $e) {
-        $this->infos['error'] = "Could not connect to the Jira's API's server";
+        $this->infos['messages'][] = "Could not connect to the Jira's API's server";
         $this->infos['errorBoolean'] = true ;
       } catch(ClientException $e){
         $this->infos['status'] = $e->getResponse()->getStatusCode();

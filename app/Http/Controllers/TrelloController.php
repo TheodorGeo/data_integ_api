@@ -119,7 +119,7 @@ class TrelloController extends Controller
         $res = $this->client->request('GET', $url, $query);
         return $res->getBody();
       } catch (ConnectException $e) {
-        $this->infos['error'] = "Could not connect to the Trello API's server";
+        $this->infos['messages'][] = "Could not connect to the Trello API's server";
         $this->infos['errorBoolean'] = true ;
       } catch(ClientException $e){
         $this->infos['status'] = $e->getResponse()->getStatusCode();
