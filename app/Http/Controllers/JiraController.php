@@ -121,7 +121,6 @@ class JiraController extends Controller
 
       $issues = [];
       $total_issues = $this->totalIssues();
-      $total_issues = 250;
       if ($this->infos['errorBoolean']) {
         return 0;
       }
