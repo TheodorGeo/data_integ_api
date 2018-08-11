@@ -66,21 +66,27 @@ class WrikeController extends Controller
     }
 
 
+    //--------------------------------------------------------------------------
+    //Use this method to get all the tasks from a folder or a project via it's id
+    //This method is used in showById & showByName actions
+    //--------------------------------------------------------------------------
+
+
     private function getFolder($id)
     {
-      $t =  ($this->request($this->foldersUri($id)));
+      $tasks =  ($this->request($this->foldersUri($id)));
       if ($this->infos['errorBoolean']) {
         return $this->infos;
       }
-      $t = json_decode($t);
-      $t = $t->data;
-      $temp = ['folderId' => $id, 'descendants' =>false, 'tasks' => $t];
+      $tasks = json_decode($tasks);
+      $tasks = $tasks->data;
+      $temp = ['folderId' => $id, 'descendants' =>false, 'tasks' => $tasks];
       if ($this->descendants === 'true') {
         $temp['descendants'] = true;
       }
       if ($this->users === 'true') {
         $users = [];
-        foreach ($t as $task) {
+        foreach ($tasks as $task) {
           foreach ($task->responsibleIds as $user) {
             if (!in_array($user, $users)) {
               $users[] = $user;
