@@ -1,3 +1,4 @@
+
 # Open Source API for data integration & extraction
 
 This is a laravel 5.6 based API for data integration and extraction from the REST APIs of :
@@ -51,6 +52,21 @@ Available routes for JIRA requests:
 - users
 
 At least 1 is required
+
+# Wrike
+- To obtain access to wrike's API a user's token is required and it can be found [here](https://www.wrike.com/frontend/apps/index.html#/api) (permanent token)
+- *Note that this is not the safest method and it is recommended to revoke the generated token after it's use*.
+
+You can find more infos at [this](https://developers.wrike.com/documentation/oauth2#skipoauth) page !
+
+Available routes for Wrike requests:
+- Route to get all projects and folders basic infos via user's token `/api/wrike/folders?token=users_token`
+- Route to get all tasks inside a project or a folder via user's token and project's/folder's id `/api/wrike/folder/{Folder's or Project's ID}?token=users_token&descendants=true&users=true`
+- Route to get all tasks inside a project or a folder via user's token and project's/folder's name  `/api/wrike/folder?token=users_token&descendants=true&users=true&name=folder/project_name`
+
+##### Available paramaters for the prefered data of each project :
+- descendants tasks
+- users (assignees in a folder/project)
 
 License
 ----

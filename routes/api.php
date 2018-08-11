@@ -53,3 +53,6 @@ Route::get('/wrike/folder/{id}', 'WrikeController@showById');
 
 //Route to get all tasks inside a folder or a project via folders name/title
 Route::get('/wrike/folder/', 'WrikeController@showByName');
+
+//Route to get all users/assignees of a project/folders
+Route::get('/wrike/folder/{id}/users', 'WrikeController@users');

@@ -66,6 +66,20 @@ class WrikeController extends Controller
     }
 
 
+    public function users($id)
+    {
+      $this->users = 'true';
+      $data = $this->getFolder($id);
+      if (!$this->infos['errorBoolean']) {
+        $users = $data['users'];
+        $temp = ['folder' => $id, 'users' => $users];
+        return $temp;
+      }else {
+        return $this->infos;
+      }
+    }
+
+
     //--------------------------------------------------------------------------
     //Use this method to get all the tasks from a folder or a project via it's id
     //This method is used in showById & showByName actions
