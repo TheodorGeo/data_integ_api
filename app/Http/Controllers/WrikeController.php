@@ -16,6 +16,7 @@ class WrikeController extends Controller
     private $name;
     private $descendants;
     private $users;
+    private $comments;
 
     function __construct()
     {
@@ -23,6 +24,7 @@ class WrikeController extends Controller
       $this->name = request('name');
       $this->descendants = request('descendants');
       $this->users = request('users');
+      $this->tasks = request('tasks');
       $this->client = new Client([
         'base_uri' => 'https://www.wrike.com/api/v3/',
         'headers' => [
@@ -94,7 +96,10 @@ class WrikeController extends Controller
       }
       $tasks = json_decode($tasks);
       $tasks = $tasks->data;
-      $temp = ['folderId' => $id, 'descendants' =>false, 'tasks' => $tasks];
+      $temp = ['folderId' => $id, 'descendants' =>false];
+      if ($this->tasks === 'true') {
+        $temp['tasks'] = $tasks;
+      }
       if ($this->descendants === 'true') {
         $temp['descendants'] = true;
       }
