@@ -72,7 +72,7 @@ class WrikeController extends Controller
       $data = $this->getFolder($id);
       if (!$this->infos['errorBoolean']) {
         $users = $data['users'];
-        $temp = ['folder' => $id, 'users' => $users];
+        $temp = ['folderId' => $id, 'users' => $users];
         return $temp;
       }else {
         return $this->infos;
