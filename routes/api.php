@@ -46,13 +46,13 @@ Route::get('/jira/project/{projectKey}', 'JiraController@show')->middleware('cor
 */
 
 //Route to get all projects and folders basic infos via user's token
-Route::get('/wrike/folders', 'WrikeController@index');
+Route::get('/wrike/folders', 'WrikeController@index')->middleware('cors');;
 
 //Route to get all tasks inside a folder or a project via folders id
-Route::get('/wrike/folder/{id}', 'WrikeController@showById');
+Route::get('/wrike/folder/{id}', 'WrikeController@showById')->middleware('cors');;
 
 //Route to get all tasks inside a folder or a project via folders name/title
-Route::get('/wrike/folder/', 'WrikeController@showByName');
+Route::get('/wrike/folder/', 'WrikeController@showByName')->middleware('cors');;
 
 //Route to get all users/assignees of a project/folders
-Route::get('/wrike/folder/{id}/users', 'WrikeController@users');
+Route::get('/wrike/folder/{id}/users', 'WrikeController@users')->middleware('cors');;
