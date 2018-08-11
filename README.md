@@ -62,8 +62,8 @@ You can find more infos at [this](https://developers.wrike.com/documentation/oau
 Available routes for Wrike requests:
 - Route to get all projects and folders basic infos via user's token `/api/wrike/folders?token=users_token`
 - Route to get all tasks inside a project or a folder via user's token and project's/folder's id `/api/wrike/folder/{Folder's or Project's ID}?token=users_token&descendants=true&users=true&tasks=true`
-- Route to get all tasks inside a project or a folder via user's token and project's/folder's name  `/api/wrike/folder?token=users_token&descendants=true&users=true&name=folder/project_name`
-- Route to get all users / assignees inside a folder / project `/api/wrike/folder/{Folder's or Project's ID}/users?token=users_token&descendants=true&tasks=true`
+- Route to get all tasks inside a project or a folder via user's token and project's/folder's name  `/api/wrike/folder?token=users_token&descendants=true&users=true&tasks=true&name=folder/project_name`
+- Route to get all users / assignees inside a folder / project `/api/wrike/folder/{Folder's or Project's ID}/users?token=users_token&descendants=true`
 
 ##### Available paramaters for the prefered data of each project :
 - tasks
