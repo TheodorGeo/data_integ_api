@@ -46,13 +46,32 @@ Route::get('/jira/project/{projectKey}', 'JiraController@show')->middleware('cor
 */
 
 //Route to get all projects and folders basic infos via user's token
-Route::get('/wrike/folders', 'WrikeController@index')->middleware('cors');;
+Route::get('/wrike/folders', 'WrikeController@index')->middleware('cors');
 
 //Route to get all tasks inside a folder or a project via folders id
-Route::get('/wrike/folder/{id}', 'WrikeController@showById')->middleware('cors');;
+Route::get('/wrike/folder/{id}', 'WrikeController@showById')->middleware('cors');
 
 //Route to get all tasks inside a folder or a project via folders name/title
-Route::get('/wrike/folder/', 'WrikeController@showByName')->middleware('cors');;
+Route::get('/wrike/folder/', 'WrikeController@showByName')->middleware('cors');
 
 //Route to get all users/assignees of a project/folders
-Route::get('/wrike/folder/{id}/users', 'WrikeController@users')->middleware('cors');;
+Route::get('/wrike/folder/{id}/users', 'WrikeController@users')->middleware('cors');
+
+
+/*
+|--------------------------------------------------------------------------
+|Registered routes for Asana
+|--------------------------------------------------------------------------
+*/
+
+//Route to get all projects via user's token
+Route::get('/asana/projects', 'AsanaController@index');
+
+//Route to get all tasks or users inside a project
+Route::get('/asana/project/{id}', 'AsanaController@show');
+
+//Route to get all tasks in a project
+Route::get('/asana/project/{id}/tasks', 'AsanaController@tasks');
+
+//Route to get all users in a project's Workspace
+Route::get('/asana/project/{id}/users', 'AsanaController@users');
