@@ -70,6 +70,30 @@ Available routes for Wrike requests:
 - descendants (tasks or users)
 - users (assignees in a folder/project)
 
+
+# Asana
+To obtain access to Asana's API you must generate a token by following the steps below :
+```javascript
+Click Avatar
+My Profile Settings
+Apps
+Manage Developer Apps
+Create New Personal Access Token
+```
+*Note that this is not the safest method and it is recommended to deauthorize the generated token after it's use*.
+
+More infos can be found [here](https://asana.com/developers/documentation/getting-started/auth)
+
+Available routes for Wrike requests:
+- Route to get all projects basic infos via user's token `/api/asana/projects?token=users_token`
+- Route to get all tasks or users inside a project via user's token and projects id `/api/asana/project/{Project's ID}?token=users_token&fields=users,tasks`
+- Route to get all tasks inside a project via user's token and project's id  `/api/asana/project/{Project's ID}/tasks?token=users_token`
+- Route to get all users  in a project's workspace `/api/asana/project/{Project's ID}/users?token=users_token`
+
+##### Available paramaters for the prefered data of each project (2nd Route) :
+- tasks
+- users
+
 License
 ----
 
