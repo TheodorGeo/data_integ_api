@@ -65,13 +65,13 @@ Route::get('/wrike/folder/{id}/users', 'WrikeController@users')->middleware('cor
 */
 
 //Route to get all projects via user's token
-Route::get('/asana/projects', 'AsanaController@index');
+Route::get('/asana/projects', 'AsanaController@index')->middleware('cors');
 
 //Route to get all tasks or users inside a project
-Route::get('/asana/project/{id}', 'AsanaController@show');
+Route::get('/asana/project/{id}', 'AsanaController@show')->middleware('cors');
 
 //Route to get all tasks in a project
-Route::get('/asana/project/{id}/tasks', 'AsanaController@tasks');
+Route::get('/asana/project/{id}/tasks', 'AsanaController@tasks')->middleware('cors');
 
 //Route to get all users in a project's Workspace
-Route::get('/asana/project/{id}/users', 'AsanaController@users');
+Route::get('/asana/project/{id}/users', 'AsanaController@users')->middleware('cors');
