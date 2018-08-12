@@ -78,6 +78,7 @@ class AsanaController extends Controller
 
   public function users($id)
   {
+    $this->getProject($id);
     $users = $this->getUsers($id);
     if ($this->infos['errorBoolean']) {
       return $this->infos;
