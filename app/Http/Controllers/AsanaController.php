@@ -46,6 +46,7 @@ class AsanaController extends Controller
       return $this->infos;
     }else {
       $this->fields = explode(',', request('fields'));
+      $this->getProject($id);
       $data = [];
     }
     foreach ($this->fields as $field) {
@@ -123,9 +124,9 @@ class AsanaController extends Controller
 
   private function projectToWorkspace($id)
   {
-    $project = $this->getProject($id);
+    $project = $this->project;
     if (!$this->infos['errorBoolean']) {
-      $data = json_decode($project)->data;
+      $data = $project['project'];
       return $data->workspace->id;
     }else {
       return false;
