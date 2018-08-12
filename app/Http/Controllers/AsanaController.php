@@ -15,7 +15,7 @@ class AsanaController extends Controller
   ];
   private $token;
   private $fields = [];
-
+  private $project;
   function __construct()
   {
     $this->token = request('token');
