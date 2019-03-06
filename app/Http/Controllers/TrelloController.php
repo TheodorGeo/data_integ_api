@@ -15,12 +15,14 @@ class TrelloController extends Controller
     private $infos = [
       'errorBoolean' => false
     ];
+    private $integration;
 
-    function __construct()
+    function __construct($integration = null)
     {
-      $this->token = request('token');
-      $this->client = new Client(['base_uri' => 'https://api.trello.com/1/']);
-      $this->app_key = env('TRELLO_APP_KEY', '0043dc605ec22c8b475f7e945cc1f067');
+        $this->integration = $integration;
+        $this->token = isset($integration['token']) ? $integration['token'] : request('token');
+        $this->client = new Client(['base_uri' => 'https://api.trello.com/1/']);
+        $this->app_key = env('TRELLO_APP_KEY', '0043dc605ec22c8b475f7e945cc1f067');
 
     }
 
@@ -54,7 +56,7 @@ class TrelloController extends Controller
     public function boardByShortLink($shortLink)
     {
       $board = $this->getBoardByShortLink($shortLink);
-      $fields = $this->fields();
+      $fields = isset($this->integration['fields']) ? $this->integration['fields'] :$this->fields();
       if ($this->infos['errorBoolean']) {
         return $this->infos;
       }

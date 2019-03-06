@@ -1,9 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
-use Theodor\Mapping\Maps;
-
 /*
 |--------------------------------------------------------------------------
 |Registered routes for Trello
@@ -77,3 +73,4 @@ Route::get('/asana/project/{id}/tasks', 'AsanaController@tasks')->middleware('co
 Route::get('/asana/project/{id}/users', 'AsanaController@users')->middleware('cors');
 
 //// TODO: Create routes for mapping data from 4 PM tools to one integrated Schema
+Route::post('/integration', 'IntegrationController@index')->middleware('cors');
