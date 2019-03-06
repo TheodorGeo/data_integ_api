@@ -10,31 +10,36 @@ use Theodor\Mapping\IntegratedSchema\Info;
 
 class IntegratedSchema
 {
-    static $infos=[];
-    static $tasks=[];
-    static $users=[];
+    public $infos=[];
+    public $tasks=[];
+    public $users=[];
 
-    public static function setDate()
+
+    public function __construct()
     {
-        self::$infos['date'] = date('Y-m-d');
+        $this->setDate();
+    }
+
+    public function addInfos(Info $info)
+    {
+        $this->infos['sources'][] = $info->source;
+        $this->infos['project'][] = $info->project;
     }
 
 
-    public static function addInfos(Info $info)
+    public function addTasks(Task $task)
     {
-        self::$infos['sources'][] = $info->source;
-        self::$infos['project'][] = $info->project;
+        $this->tasks[] = $task;
     }
 
 
-    public static function addTasks(Task $task)
+    public function addUser(User $user)
     {
-        self::$tasks[] = $task;
+        $this->users[] = $user;
     }
 
-
-    public static function addUser(User $user)
+    private function setDate()
     {
-        self::$tasks[] = $user;
+        $this->infos['date'] = date('Y-m-d');
     }
 }

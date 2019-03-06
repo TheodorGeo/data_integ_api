@@ -3,14 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Theodor\Repositories\Trello;
+use Illuminate\Support\Facades\Response;
+use Theodor\Mapping\Requests\Trello;
+
+use Theodor\Mapping\Responses\IntegratedSchema;
 
 class IntegrationController extends Controller
 {
     public function index(Request $request)
     {
         $data = $request->post();
-        //dd($data['trello']);
-        var_dump(Trello::get($data['trello'])->handle()->boardByShortLink($data['trello']['shortLink']));
+
+        $integratedSchema = new IntegratedSchema();
+
+        new Trello($data['trello'], $integratedSchema);
+
+        return Response::json($integratedSchema);
     }
 }
