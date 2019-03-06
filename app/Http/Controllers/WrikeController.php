@@ -18,13 +18,13 @@ class WrikeController extends Controller
     private $users;
     private $comments;
 
-    function __construct()
+    function __construct($integration=null)
     {
-      $this->token = request('token');
-      $this->name = request('name');
-      $this->descendants = request('descendants');
-      $this->users = request('users');
-      $this->tasks = request('tasks');
+      $this->token = isset($integration) ? $integration["token"] : request('token');
+      $this->name = isset($integration) ? $integration["folderName"] : request('name');
+      $this->descendants = isset($integration) ? 'true' : request('descendants');
+      $this->users = (isset($integration) && in_array('users',$integration['fields'])) ? 'true' : request('users');
+      $this->tasks =(isset($integration) && in_array('tasks',$integration['fields'])) ? 'true' : request('tasks');
       $this->client = new Client([
         'base_uri' => 'https://www.wrike.com/api/v3/',
         'headers' => [

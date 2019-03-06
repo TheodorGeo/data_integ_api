@@ -3,12 +3,12 @@
 
 namespace Theodor\Repositories;
 
-use App\Http\Controllers\TrelloController;
+use App\Http\Controllers\WrikeController;
 
-class Trello
+class Wrike
 {
     public $token;
-    public $shortLink;
+    public $folderName;
     public $fields;
 
     public function __construct($data)
@@ -25,9 +25,9 @@ class Trello
 
     public function handle()
     {
-        return new TrelloController([
+        return new WrikeController([
             "token" => $this->token,
-            "shortLink" => $this->shortLink,
+            "folderName" => $this->folderName,
             "fields" => $this->fields
         ]);
     }
