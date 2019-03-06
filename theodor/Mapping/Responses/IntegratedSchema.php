@@ -13,6 +13,7 @@ class IntegratedSchema
     public $infos=[];
     public $tasks=[];
     public $users=[];
+    public $errors=[];
 
 
     public function __construct()

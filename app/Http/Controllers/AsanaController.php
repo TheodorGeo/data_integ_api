@@ -16,9 +16,9 @@ class AsanaController extends Controller
   private $token;
   private $fields = [];
   private $project;
-  function __construct()
+  function __construct($integration=null)
   {
-    $this->token = request('token');
+    $this->token = isset($integration) ? $integration['token'] : request('token');
     $this->client = new Client([
       'base_uri' => 'https://app.asana.com/api/1.0/',
       'headers' => [
@@ -38,14 +38,14 @@ class AsanaController extends Controller
   }
 
 
-  public function show($id)
+  public function show($id, $fields=null)
   {
-    if (!(request('fields') === 'users' || request('fields') === 'tasks' || request('fields') === 'users,tasks' || request('fields') === 'tasks,users')) {
+    if (!(request('fields') === 'users' || request('fields') === 'tasks' || request('fields') === 'users,tasks' || request('fields') === 'tasks,users') && !isset($fields)) {
       $this->infos['errorBoolean'] = true;
       $this->infos['messages'] = 'At least 1 field is required (users or tasks)';
       return $this->infos;
     }else {
-      $this->fields = explode(',', request('fields'));
+      $this->fields = isset($fields) ? $fields : explode(',', request('fields'));
       $this->getProject($id);
       $data = [];
     }

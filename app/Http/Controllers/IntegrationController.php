@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use Theodor\Mapping\Requests\Trello;
 use Theodor\Mapping\Requests\Wrike;
+use Theodor\Mapping\Requests\Asana;
 
 
 use Theodor\Mapping\Responses\IntegratedSchema;
@@ -18,9 +19,27 @@ class IntegrationController extends Controller
 
         $integratedSchema = new IntegratedSchema();
 
-        new Trello($data['trello'], $integratedSchema);
-        new Wrike($data['wrike'], $integratedSchema);
+        try{
+            new Trello($data['trello'], $integratedSchema);
+        }catch (\Exception $e){
+            $integratedSchema->errors[] = 'Could not connect to Trello';
+        }
 
+        try{
+            new Wrike($data['wrike'], $integratedSchema);
+        }catch (\Exception $e){
+            $integratedSchema->errors[] = 'Could not connect to Wrike';
+        }
+
+        try{
+            new Asana($data['asana'], $integratedSchema);
+        }catch (\Exception $e){
+            $integratedSchema->errors[] = 'Could not connect to Asana';
+        }
+
+        if(empty($integratedSchema->errors)){
+            unset($integratedSchema->errors);
+        }
 
         return Response::json($integratedSchema);
     }
