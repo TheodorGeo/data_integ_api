@@ -98,7 +98,7 @@ Available routes for Wrike requests:
 
 
 This is an endpoint that creates an integrated schema by combining the results of the above PM tools
-- Route to the integrated schema Post: `/api/asana/projects?token=users_token`
+- Route to the integrated schema Post: `/api/integration`
 
 You need to send a POST request to the above endpoint and send a json file as shown below:
 ```json
