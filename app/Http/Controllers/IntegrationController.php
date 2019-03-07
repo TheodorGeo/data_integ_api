@@ -20,30 +20,37 @@ class IntegrationController extends Controller
 
         $integratedSchema = new IntegratedSchema();
 
-        try{
-            new Trello($data['trello'], $integratedSchema);
-        }catch (\Exception $e){
-            $integratedSchema->errors[] = 'Could not connect to Trello';
+        if (isset($data['trello'])){
+            try{
+                new Trello($data['trello'], $integratedSchema);
+            }catch (\Exception $e){
+                $integratedSchema->errors[] = 'Could not connect to Trello';
+            }
         }
 
-        try{
-            new Wrike($data['wrike'], $integratedSchema);
-        }catch (\Exception $e){
-            $integratedSchema->errors[] = 'Could not connect to Wrike';
+        if (isset($data['wrike'])){
+            try{
+                new Wrike($data['wrike'], $integratedSchema);
+            }catch (\Exception $e){
+                $integratedSchema->errors[] = 'Could not connect to Wrike';
+            }
         }
 
-        try{
-            new Asana($data['asana'], $integratedSchema);
-        }catch (\Exception $e){
-            $integratedSchema->errors[] = 'Could not connect to Asana';
+        if (isset($data['asana'])){
+            try{
+                new Asana($data['asana'], $integratedSchema);
+            }catch (\Exception $e){
+                $integratedSchema->errors[] = 'Could not connect to Asana';
+            }
         }
 
-        try{
-            new Jira($data['jira'], $integratedSchema);
-        }catch (\Exception $e){
-            $integratedSchema->errors[] = 'Could not connect to JIRA';
+        if (isset($data['jira'])){
+            try{
+                new Jira($data['jira'], $integratedSchema);
+            }catch (\Exception $e){
+                $integratedSchema->errors[] = 'Could not connect to JIRA';
+            }
         }
-
 
         if(empty($integratedSchema->errors)){
             unset($integratedSchema->errors);

@@ -72,5 +72,12 @@ Route::get('/asana/project/{id}/tasks', 'AsanaController@tasks')->middleware('co
 //Route to get all users in a project's Workspace
 Route::get('/asana/project/{id}/users', 'AsanaController@users')->middleware('cors');
 
-//// TODO: Create routes for mapping data from 4 PM tools to one integrated Schema
+
+/*
+|--------------------------------------------------------------------------
+|Registered routes for Integrated Schema
+|--------------------------------------------------------------------------
+*/
+
+//Route to get an integrated schema from 4 pm tools (optional)
 Route::post('/integration', 'IntegrationController@index')->middleware('cors');
