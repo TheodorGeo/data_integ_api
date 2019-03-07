@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Response;
 use Theodor\Mapping\Requests\Trello;
 use Theodor\Mapping\Requests\Wrike;
 use Theodor\Mapping\Requests\Asana;
+use Theodor\Mapping\Requests\Jira;
 
 
 use Theodor\Mapping\Responses\IntegratedSchema;
@@ -36,6 +37,13 @@ class IntegrationController extends Controller
         }catch (\Exception $e){
             $integratedSchema->errors[] = 'Could not connect to Asana';
         }
+
+        try{
+            new Jira($data['jira'], $integratedSchema);
+        }catch (\Exception $e){
+            $integratedSchema->errors[] = 'Could not connect to JIRA';
+        }
+
 
         if(empty($integratedSchema->errors)){
             unset($integratedSchema->errors);

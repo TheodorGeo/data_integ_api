@@ -19,13 +19,12 @@ class JiraController extends Controller
       'errorBoolean' => false
     ];
 
-    function __construct()
+    function __construct($integration=null)
     {
-      $this->token = request('token');
-      $this->domain = request('domain');
-      $this->email = request('email');
+      $this->token = isset($integration) ? $integration['token'] : request('token');
+      $this->domain = isset($integration) ? $integration['domain'] : request('domain');
+      $this->email = isset($integration) ? $integration['email'] :request('email');
       $this->base_uri = "https://".$this->domain.'/rest/api/2/';
-
       $this->client = new Client([
         'headers' => [
             'Content-Type' => 'application/json',
@@ -57,7 +56,7 @@ class JiraController extends Controller
     }
 
 
-    public function show($projectKey)
+    public function show($projectKey, $mapFields=array())
     {
       $response = [];
       $this->project = $projectKey;
@@ -68,12 +67,12 @@ class JiraController extends Controller
       if ($this->infos['errorBoolean']) {
         return $this->infos;
       }
-      $fields = $this->fields();
-      if ($fields['users']) {
+      $fields = $this->fields($mapFields);
+      if ($fields['users'] || in_array('users', $mapFields)) {
         $users = $this->getUsers();
         $users_bool = true;
       }
-      if ($fields['issues']) {
+      if ($fields['issues'] || in_array('tasks', $mapFields)) {
         $issues = $this->getIssues();
         $issues_bool = true;
       }
@@ -214,15 +213,19 @@ class JiraController extends Controller
     //--------------------------------------------------------------------------
 
 
-    private function fields()
+    private function fields($mapFields=array())
     {
       $fields = [
         'issues' => false,
         'users' => false
       ];
       $fieldBoolean = false;
-      if (request('fields') !== null) {
-        $query = explode(',', request('fields'));
+      if (request('fields') !== null || !empty($mapFields)) {
+        if (!empty($mapFields)){
+            $query = $mapFields;
+        }else{
+            $query = explode(',', request('fields'));
+        }
         foreach ($query as $f) {
           if (($f === 'issues') || ($f === 'users')) {
             $fields[$f] = true;
