@@ -144,7 +144,7 @@ Response:
     },
     "tasks": [
         {
-            "title": "Make offer to eight8.gr",
+            "title": "Make offer to GO",
             "description": "<h1>Hello there</h1>\nWhisk the eggs *vigorously*.\nIngredients:\n\n- Eggs\n- Oil\n- *Optional:* milk",
             "sanitizedDescription": "Hello there\nWhisk the eggs *vigorously*.\nIngredients:\n\n- Eggs\n- Oil\n- *Optional:* milk",
             "complete": false
