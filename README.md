@@ -94,6 +94,88 @@ Available routes for Wrike requests:
 - tasks
 - users
 
+#Integrated Schema
+This is an endpoint that creates an integrated schema by combining the results of the above PM tools
+- Route to the integrated schema Post: `/api/asana/projects?token=users_token`
+
+You need to send a POST request to the above endpoint and send a json file as shown below:
+```json
+{
+	"trello": {
+		"token": "token",
+		"shortLink": "shortLink",
+		"fields": ["cards","lists","checklists","members"]
+	},
+	"jira": {
+		"token": "token",
+		"email": "email",
+		"domain": "demo.atlassian.net",
+		"projectKey": "TEST",
+		"fields": ["issues","users"]
+	},
+	"wrike": {
+		"token": "token",
+		"folderName": "folderName",
+		"fields": ["tasks","users","descendants"]
+	},
+	"asana": {
+		"token": "token",
+		"projectId": "projectId",
+		"fields": ["tasks", "users"]
+	}
+}
+```
+
+Response:
+```json
+{
+    "infos": {
+        "date": "2019-03-07",
+        "sources": [
+            "Trello",
+            "Wrike",
+            "Asana"
+        ],
+        "project": [
+            "March 2019",
+            "Shared",
+            "App Features"
+        ]
+    },
+    "tasks": [
+        {
+            "title": "Make offer to eight8.gr",
+            "description": "<h1>Hello there</h1>\nWhisk the eggs *vigorously*.\nIngredients:\n\n- Eggs\n- Oil\n- *Optional:* milk",
+            "sanitizedDescription": "Hello there\nWhisk the eggs *vigorously*.\nIngredients:\n\n- Eggs\n- Oil\n- *Optional:* milk",
+            "complete": false
+        },
+        {
+            "title": "Pay monthly obligations",
+            "description": "",
+            "sanitizedDescription": "",
+            "complete": false
+        },
+        {
+            "title": "Present Thesis",
+            "description": "",
+            "sanitizedDescription": "",
+            "complete": false
+        }
+    ],
+    "users": [
+        {
+            "fullName": "Theodor G",
+            "email": "Not Available"
+        },
+        {
+            "fullName": "Theodor Georgopoulos",
+            "email": "thodorisgr0@gmail.com"
+        }
+    ]
+}
+```
+Note: You can get only the data from the selected PM tools via sending only what you need at the post request  in JSON file 
+
 License
 ----
 
