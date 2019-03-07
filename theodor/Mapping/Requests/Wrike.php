@@ -14,11 +14,14 @@ class Wrike
 {
     private $folder;
 
+    private $folderName;
+
     private $schema;
 
     public function __construct($data, IntegratedSchema $schema)
     {
         $this->schema = $schema;
+        $this->folderName = $data['folderName'];
         $this->folder = WrikeRepository::get($data)->handle()->showByName()[0];
         $this->build();
     }
@@ -34,7 +37,7 @@ class Wrike
     {
         $this->schema->addInfos(new Info([
             "source" => 'Wrike',
-            "project" => $this->folder['folderId']
+            "project" => $this->folderName
         ]));
     }
 
