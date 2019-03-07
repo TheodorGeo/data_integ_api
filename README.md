@@ -94,7 +94,7 @@ Available routes for Wrike requests:
 - tasks
 - users
 
-#Integrated Schema
+# Integrated Schema
 
 
 This is an endpoint that creates an integrated schema by combining the results of the above PM tools
